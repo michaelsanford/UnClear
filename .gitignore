@@ -2,6 +2,7 @@ node_modules/
 
 # Developer utility for regenerating icons
 generate-icons.html
+generate-banner.html
 
 # Build output
 *.zip

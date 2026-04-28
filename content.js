@@ -57,6 +57,13 @@ function findDismissibleAncestor(el) {
       return node;
     }
 
+    // Hard structural boundaries — walking past <nav> or <main> would remove
+    // site-level chrome (e.g. the entire LinkedIn nav bar). Return the original
+    // matched element so only it is removed.
+    if (tag === "nav" || tag === "main") {
+      return el;
+    }
+
     // Stop at modal/dialog/banner-like containers
     if (
       role === "dialog" ||

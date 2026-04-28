@@ -203,6 +203,29 @@ describe("findDismissibleAncestor", () => {
     expect(findDismissibleAncestor(inner)).toBe(wrapper);
   });
 
+  test("does not walk past <nav> — returns original element instead", () => {
+    const nav = document.createElement("nav");
+    const ul = document.createElement("ul");
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = "/verify/?entryPoint=me_navigation_menu";
+    li.appendChild(a);
+    ul.appendChild(li);
+    nav.appendChild(ul);
+    document.body.appendChild(nav);
+
+    expect(findDismissibleAncestor(a)).toBe(a);
+  });
+
+  test("does not walk past <main> — returns original element instead", () => {
+    const main = document.createElement("main");
+    const inner = document.createElement("span");
+    main.appendChild(inner);
+    document.body.appendChild(main);
+
+    expect(findDismissibleAncestor(inner)).toBe(inner);
+  });
+
   test("never returns document.body", () => {
     // Element directly in body with no special ancestors
     const el = document.createElement("span");
