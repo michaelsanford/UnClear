@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "UnClear",
+  "version": "1.0",
+  "description": "Blocks Clear identity verification prompts and banners on LinkedIn and other sites.",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
