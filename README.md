@@ -6,6 +6,11 @@ A Chromium extension that silently removes CLEAR identity verification prompts a
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![CI](https://github.com/michaelsanford/UnClear/actions/workflows/ci.yml/badge.svg)](https://github.com/michaelsanford/UnClear/actions/workflows/ci.yml)
+[![Security Policy](https://img.shields.io/badge/Security-Policy-informational)](SECURITY.md)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/michaelsanford/UnClear)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+![Manifest V3](https://img.shields.io/badge/Manifest-V3-blue)
+![node version](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
 
 ---
 
