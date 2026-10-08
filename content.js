@@ -3,9 +3,11 @@ const CLEAR_SELECTORS = [
   // iframes embedding Clear's verification flow
   'iframe[src*="clearme.com"]',
   'iframe[src*="clearidentity.com"]',
-  'iframe[src*="clear.com"]',
+  // Host-anchored so unrelated domains (e.g. nuclear.com) don't match
+  'iframe[src^="https://clear.com"]',
+  'iframe[src*="://www.clear.com"]',
+  'iframe[src*=".clear.com/"]',
   'iframe[title*="CLEAR"]',
-  'iframe[title*="Clear"]',
 
   // LinkedIn "Verify now" / "Verify with CLEAR" links — href is stable, class names are not
   'a[href*="linkedin.com/verify"]',
@@ -16,8 +18,11 @@ const CLEAR_SELECTORS = [
   'a[href*="/trust/verification"]',
 
   // LinkedIn-specific Clear banner/modal containers
-  '[data-test-id*="clear"]',
-  '[data-tracking-control-name*="clear"]',
+  // Narrow tokens — bare "clear" matches "clear-filters", "clear-search", etc.
+  '[data-test-id*="clear-verif"]',
+  '[data-test-id*="clear_verif"]',
+  '[data-tracking-control-name*="clear-verif"]',
+  '[data-tracking-control-name*="clear_verif"]',
   '[aria-label*="CLEAR"]',
   '[aria-label*="Verify with CLEAR"]',
 
@@ -151,17 +156,17 @@ if (document.readyState === "loading") {
   scanAndRemove();
 }
 
-// Watch for dynamically injected prompts (LinkedIn is a SPA)
+// Watch for dynamically injected prompts (LinkedIn is a SPA).
+// Coalesce bursts of mutations into at most one scan per animation frame.
+let scanScheduled = false;
 const observer = new MutationObserver((mutations) => {
-  let shouldScan = false;
-  for (const mutation of mutations) {
-    if (mutation.addedNodes.length > 0) {
-      shouldScan = true;
-      break;
-    }
-  }
-  if (shouldScan) {
-    scanAndRemove();
+  if (scanScheduled) return;
+  if (mutations.some((m) => m.addedNodes.length > 0)) {
+    scanScheduled = true;
+    requestAnimationFrame(() => {
+      scanScheduled = false;
+      scanAndRemove();
+    });
   }
 });
 

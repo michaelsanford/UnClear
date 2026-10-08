@@ -325,4 +325,42 @@ describe("scanAndRemove", () => {
   test("handles empty document body gracefully", () => {
     expect(() => scanAndRemove()).not.toThrow();
   });
+
+  test("removes iframe served from www.clear.com", () => {
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://www.clear.com/verify";
+    document.body.appendChild(iframe);
+
+    scanAndRemove();
+    expect(document.body.contains(iframe)).toBe(false);
+  });
+
+  test("does not remove iframe from a domain merely containing 'clear.com'", () => {
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://nuclear.com/embed";
+    document.body.appendChild(iframe);
+
+    scanAndRemove();
+    expect(document.body.contains(iframe)).toBe(true);
+  });
+
+  test("does not remove iframe titled 'Clear search'", () => {
+    const iframe = document.createElement("iframe");
+    iframe.title = "Clear search";
+    document.body.appendChild(iframe);
+
+    scanAndRemove();
+    expect(document.body.contains(iframe)).toBe(true);
+  });
+
+  test("does not remove 'clear filters' controls", () => {
+    const btn = document.createElement("button");
+    btn.setAttribute("data-test-id", "clear-filters");
+    btn.setAttribute("data-tracking-control-name", "search_clear_all");
+    btn.textContent = "Clear all";
+    document.body.appendChild(btn);
+
+    scanAndRemove();
+    expect(document.body.contains(btn)).toBe(true);
+  });
 });
