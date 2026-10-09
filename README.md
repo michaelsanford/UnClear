@@ -87,7 +87,8 @@ UnClear/
 │   └── content.test.js    Jest test suite
 └── .github/
     └── workflows/
-        └── ci.yml         CI: test → validate manifest → pack artifact
+        ├── ci.yml         CI: test → validate manifest → pack artifact
+        └── release.yml    Release: on v* tag → test → sign → draft GitHub release
 ```
 
 ## GitHub Actions
@@ -97,6 +98,7 @@ UnClear/
 | **Tests** | push / PR | Runs the Jest test suite |
 | **Validate manifest** | push / PR | Checks `manifest.json` is valid JSON with `manifest_version: 3` |
 | **Pack extension** | after tests pass | Zips the extension files and uploads as a build artifact |
+| **Release** | push of a `v*` tag | Runs tests, checks the tag matches `manifest.json`, signs and attests the extension zip, creates a draft GitHub release |
 
 ## License
 
