@@ -40,3 +40,21 @@ Please do **not** open a public issue for security vulnerabilities. See [SECURIT
 - Keep PRs focused — one concern per PR
 - Reference any related issue in the PR description
 - CI must be green before review
+
+## Releasing (maintainers)
+
+UnClear is published as an unlisted item on the [Chrome Web Store](https://chromewebstore.google.com/detail/unclear/bilmbccofgemneflaknfifappajdbcco) (ID `bilmbccofgemneflaknfifappajdbcco`).
+
+1. Bump `version` in `manifest.json` (and `package.json` to match). The Web Store rejects uploads whose version isn't higher than the published one.
+2. Commit, push to `main`, and wait for CI to go green.
+3. Download the `unclear-extension` zip artifact from the CI run, or build it locally:
+   ```powershell
+   Compress-Archive -Path manifest.json, content.js, icon48.png, icon128.png -DestinationPath unclear-extension.zip -Force
+   ```
+4. In the Chrome Web Store Developer Dashboard: UnClear → Package → *Upload new package* → *Submit for review*. Keep visibility unlisted.
+5. Once published, tag and create the GitHub release:
+   ```bash
+   git tag -a vX.Y -m "vX.Y" && git push origin vX.Y
+   gh release create vX.Y --title "vX.Y" --generate-notes
+   ```
+   Optionally attach the published `.crx` with `gh release upload vX.Y <id>.crx` and link the store listing in the notes.

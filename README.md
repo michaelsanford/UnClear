@@ -10,7 +10,7 @@ A Chromium extension that silently removes CLEAR identity verification prompts a
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/michaelsanford/UnClear)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 ![Manifest V3](https://img.shields.io/badge/Manifest-V3-blue)
-![node version](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
+![node version](https://img.shields.io/badge/node-%3E%3D22-brightgreen)
 
 ---
 
@@ -52,13 +52,13 @@ CLEAR (clearme.com) embeds identity-verification prompts, iframes, and "Verify w
 
 ### Extension zip (CI artifact)
 
-Each CI run produces an `unclear-extension.zip` artifact (see the Actions tab) ready for sideloading or submission to the Edge Add-ons store.
+Each CI run produces an `unclear-extension.zip` artifact (see the Actions tab) ready for submission to the [Chrome Web Store](https://chromewebstore.google.com/detail/unclear/bilmbccofgemneflaknfifappajdbcco).
 
 ## Development
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22+
 - npm
 
 ### Run tests
